@@ -1,0 +1,29 @@
+databases:
+  - name: prepedge-db
+    databaseName: prepedgedb
+    user: prepedge_user
+    plan: free
+
+services:
+  - type: web
+    name: prepedge-api
+    env: docker
+    plan: free
+    healthCheckPath: /api/interview/topics
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: prepedge-db
+          property: connectionString
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: prepedge-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: prepedge-db
+          property: password
+      - key: PORT
+        value: "8080"
+      - key: GROQ_API_KEY
+        sync: false
