@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { login } from '../api/apiClient';
 import { Brain, Eye, EyeOff, ArrowRight, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const { saveAuth } = useAuth();
@@ -33,24 +32,17 @@ export default function LoginPage() {
 
       <div style={{ width: '100%', maxWidth: 420, position: 'relative', zIndex: 1 }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 40, justifyContent: 'center' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Brain size={18} color="white" />
           </div>
-          <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.2rem' }}>Prep<span style={{ color: '#7c3aed' }}>Edge</span> <span style={{ color: '#7c3aed', fontSize: '0.65rem' }}>AI</span></span>
+          <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.2rem' }}>Prep<span style={{ color: '#8b5cf6' }}>Edge</span> <span style={{ color: '#06b6d4', fontSize: '0.65rem' }}>AI</span></span>
         </Link>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="card auth-card" 
-          style={{ padding: 40 }}
-        >
+        <div className="card auth-card" style={{ padding: 40 }}>
           <div style={{ marginBottom: 32, textAlign: 'center' }}>
-            <div style={{ marginBottom: 16 }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-400)', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                <Zap size={13} /> Welcome Back
-              </span>
+            <div style={{ display: 'inline-flex', padding: '8px 18px', borderRadius: 999, background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)', marginBottom: 16 }}>
+              <Zap size={13} color="#06b6d4" style={{ marginRight: 6 }} />
+              <span style={{ fontSize: '0.8rem', color: '#06b6d4', fontWeight: 600 }}>Welcome Back</span>
             </div>
             <h1 style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.5px' }}>Sign in to PrepEdge</h1>
             <p style={{ color: 'var(--text-300)', marginTop: 8, fontSize: '0.9rem' }}>Continue your interview preparation</p>
@@ -82,9 +74,9 @@ export default function LoginPage() {
           <div className="divider" />
           <p style={{ textAlign: 'center', color: 'var(--text-300)', fontSize: '0.9rem' }}>
             Don't have an account?{' '}
-            <Link to="/signup" style={{ color: 'var(--primary)', fontWeight: 600 }}>Sign up free</Link>
+            <Link to="/signup" style={{ color: '#8b5cf6', fontWeight: 600 }}>Sign up free</Link>
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

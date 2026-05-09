@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { signup } from '../api/apiClient';
 import { Brain, Eye, EyeOff, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export default function SignupPage() {
   const { saveAuth } = useAuth();
@@ -36,62 +35,43 @@ export default function SignupPage() {
       <div className="orb orb-cyan" style={{ width: 400, height: 400, bottom: '-10%', right: '-10%', opacity: 0.25 }} />
 
       {/* Left panel */}
-      <motion.div 
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-        style={{ flex: 1, display: 'none', flexDirection: 'column', justifyContent: 'center', padding: '60px 80px', position: 'relative', zIndex: 1 }} 
-        className="auth-left-panel"
-      >
+      <div style={{ flex: 1, display: 'none', flexDirection: 'column', justifyContent: 'center', padding: '60px 80px', position: 'relative', zIndex: 1 }} className="auth-left-panel">
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 60 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 11, background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: 40, height: 40, borderRadius: 11, background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Brain size={20} color="white" />
           </div>
-          <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.3rem' }}>Prep<span style={{ color: '#7c3aed' }}>Edge</span> <span style={{ color: '#7c3aed', fontSize: '0.7rem' }}>AI</span></span>
+          <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.3rem' }}>Prep<span style={{ color: '#8b5cf6' }}>Edge</span> <span style={{ color: '#06b6d4', fontSize: '0.7rem' }}>AI</span></span>
         </Link>
         <h2 style={{ fontSize: '2.5rem', fontWeight: 800, letterSpacing: '-1px', marginBottom: 16 }}>
           The smartest way to<br /><span className="gradient-text">prep for interviews</span>
         </h2>
         <p style={{ color: 'var(--text-300)', marginBottom: 40, lineHeight: 1.7 }}>Join thousands of developers who've landed offers at top companies.</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {perks.map((p, i) => (
-            <motion.div 
-              key={p} 
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-              style={{ display: 'flex', alignItems: 'center', gap: 12 }}
-            >
-              <CheckCircle size={18} color="var(--primary)" />
+          {perks.map(p => (
+            <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <CheckCircle size={18} color="#8b5cf6" />
               <span style={{ color: 'var(--text-200)', fontSize: '0.95rem' }}>{p}</span>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Right: form */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px', position: 'relative', zIndex: 1 }}>
         <div style={{ width: '100%', maxWidth: 440 }}>
           {/* Mobile logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 40, justifyContent: 'center' }} className="mobile-logo">
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Brain size={18} color="white" />
             </div>
-            <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.2rem' }}>Prep<span style={{ color: '#7c3aed' }}>Edge</span> <span style={{ color: '#7c3aed', fontSize: '0.65rem' }}>AI</span></span>
+            <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.2rem' }}>Prep<span style={{ color: '#8b5cf6' }}>Edge</span> <span style={{ color: '#06b6d4', fontSize: '0.65rem' }}>AI</span></span>
           </Link>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            className="card auth-card" 
-            style={{ padding: 40 }}
-          >
+          <div className="card auth-card" style={{ padding: 40 }}>
             <div style={{ marginBottom: 32, textAlign: 'center' }}>
-              <div style={{ marginBottom: 16 }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-400)', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                  <Sparkles size={13} /> Start for Free
-                </span>
+              <div style={{ display: 'inline-flex', padding: '8px 18px', borderRadius: 999, background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(139,92,246,0.3)', marginBottom: 16 }}>
+                <Sparkles size={13} color="#a78bfa" style={{ marginRight: 6 }} />
+                <span style={{ fontSize: '0.8rem', color: '#a78bfa', fontWeight: 600 }}>Start for Free</span>
               </div>
               <h1 style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.5px' }}>Create your account</h1>
               <p style={{ color: 'var(--text-300)', marginTop: 8, fontSize: '0.9rem' }}>Start preparing smarter today</p>
@@ -125,9 +105,9 @@ export default function SignupPage() {
             <div className="divider" />
             <p style={{ textAlign: 'center', color: 'var(--text-300)', fontSize: '0.9rem' }}>
               Already have an account?{' '}
-              <Link to="/login" style={{ color: 'var(--primary)', fontWeight: 600 }}>Sign in</Link>
+              <Link to="/login" style={{ color: '#8b5cf6', fontWeight: 600 }}>Sign in</Link>
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
       <style>{`@media(min-width:900px){.auth-left-panel{display:flex!important}.mobile-logo{display:none!important}}`}</style>

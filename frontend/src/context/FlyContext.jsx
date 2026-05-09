@@ -15,8 +15,8 @@ function FlyParticle({ id, x, y, tx, ty, onDone }) {
         width: 28,
         height: 28,
         borderRadius: '50%',
-        background: 'radial-gradient(circle, var(--primary) 30%, rgba(80,80,80,0.3) 100%)',
-        boxShadow: '0 0 12px rgba(80,80,80,0.8), 0 0 24px rgba(80,80,80,0.4)',
+        background: 'radial-gradient(circle, #fbbf24 30%, rgba(245,158,11,0.3) 100%)',
+        boxShadow: '0 0 12px rgba(245,158,11,0.8), 0 0 24px rgba(245,158,11,0.4)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -56,10 +56,10 @@ function SavedToast({ visible }) {
       padding: '12px 20px',
       borderRadius: 12,
       background: 'rgba(20,20,36,0.95)',
-      border: '1px solid rgba(80,80,80,0.4)',
+      border: '1px solid rgba(245,158,11,0.4)',
       backdropFilter: 'blur(16px)',
-      boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(80,80,80,0.15)',
-      color: 'var(--primary)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(245,158,11,0.15)',
+      color: '#fbbf24',
       fontSize: '0.875rem',
       fontWeight: 600,
       transform: visible ? 'translateX(0) scale(1)' : 'translateX(120%) scale(0.9)',
@@ -70,12 +70,12 @@ function SavedToast({ visible }) {
       <span style={{ fontSize: '18px' }}>⭐</span>
       Saved to Important Bank
       <a href="/bank" style={{
-        color: 'var(--primary)', fontSize: '0.8rem', fontWeight: 700,
-        textDecoration: 'none', borderBottom: '1px solid rgba(0,0,0,0.4)',
+        color: '#8b5cf6', fontSize: '0.8rem', fontWeight: 700,
+        textDecoration: 'none', borderBottom: '1px solid rgba(139,92,246,0.4)',
         pointerEvents: 'all',
       }}
-        onMouseEnter={e => e.target.style.color = 'var(--primary)'}
-        onMouseLeave={e => e.target.style.color = 'var(--primary)'}
+        onMouseEnter={e => e.target.style.color = '#a78bfa'}
+        onMouseLeave={e => e.target.style.color = '#8b5cf6'}
       >View →</a>
     </div>,
     document.body

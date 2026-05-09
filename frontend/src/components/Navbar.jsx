@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Brain, Menu, X, LogOut, Zap, Star, Moon, Sun } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -35,7 +34,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Features', action: () => scrollTo('features') },
     { label: 'How It Works', action: () => scrollTo('how-it-works') },
-    { label: 'Important Bank', to: '/bank', icon: <Star size={13} color="var(--primary)" fill="var(--primary)" /> },
+    { label: 'Important Bank', to: '/bank', icon: <Star size={13} color="#f59e0b" fill="#f59e0b" /> },
   ];
 
   return (
@@ -54,11 +53,11 @@ export default function Navbar() {
           if (location.pathname === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
           else { navigate('/'); }
         }} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(124,58,237,0.4)' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(124,58,237,0.4)' }}>
             <Brain size={20} color="white" />
           </div>
           <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px', color: 'var(--text-100)' }}>
-            Prep<span style={{ color: '#7c3aed' }}>Edge</span> <span style={{ color: '#7c3aed', fontSize: '0.7rem', fontWeight: 600 }}>AI</span>
+            Prep<span style={{ color: '#8b5cf6' }}>Edge</span> <span style={{ color: '#06b6d4', fontSize: '0.7rem', fontWeight: 600 }}>AI</span>
           </span>
         </button>
 
@@ -70,11 +69,11 @@ export default function Navbar() {
                 id={l.label === 'Important Bank' ? 'nav-bank-link' : undefined}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 5,
-                  color: location.pathname === l.to ? 'var(--primary)' : '#94a3b8',
+                  color: location.pathname === l.to ? '#f59e0b' : '#94a3b8',
                   fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s',
                 }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--primary)'}
-                onMouseLeave={e => e.currentTarget.style.color = location.pathname === l.to ? 'var(--primary)' : '#94a3b8'}
+                onMouseEnter={e => e.currentTarget.style.color = '#fbbf24'}
+                onMouseLeave={e => e.currentTarget.style.color = location.pathname === l.to ? '#f59e0b' : '#94a3b8'}
               >
                 {l.icon}{l.label}
               </Link>
@@ -108,7 +107,7 @@ export default function Navbar() {
                 <Link to="/dashboard" className="btn btn-outline btn-sm" style={{ gap: 6 }}>
                   <Zap size={14} /> Dashboard
                 </Link>
-                <button onClick={handleLogout} className="btn btn-sm" style={{ background: 'rgba(50,50,50,0.1)', color: '#fca5a5', border: '1px solid rgba(50,50,50,0.3)', borderRadius: 'var(--radius)' }}>
+                <button onClick={handleLogout} className="btn btn-sm" style={{ background: 'rgba(239,68,68,0.1)', color: '#fca5a5', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius)' }}>
                   <LogOut size={14} /> Logout
                 </button>
               </>
@@ -126,35 +125,25 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div 
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            style={{ overflow: 'hidden', background: theme === 'dark' ? 'rgba(10,10,18,0.98)' : 'rgba(255,255,255,0.98)', borderTop: '1px solid var(--border)' }}
-          >
-            <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {navLinks.map(l => (
-                l.to ? (
-                  <Link key={l.label} to={l.to} style={{ color: '#94a3b8', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 6 }} onClick={() => setMenuOpen(false)}>{l.icon}{l.label}</Link>
-                ) : (
-                  <button key={l.label} onClick={l.action} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', textAlign: 'left', fontWeight: 500, fontSize: '1rem' }}>{l.label}</button>
-                )
-              ))}
-              {user ? (
-                <button onClick={handleLogout} style={{ color: '#fca5a5', textAlign: 'left', background: 'none', border: 'none', fontWeight: 500 }}>Logout</button>
-              ) : (
-                <>
-                  <Link to="/login" onClick={() => setMenuOpen(false)} style={{ color: '#94a3b8' }}>Login</Link>
-                  <Link to="/signup" onClick={() => setMenuOpen(false)} style={{ color: 'var(--primary)', fontWeight: 600 }}>Sign Up</Link>
-                </>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {menuOpen && (
+        <div style={{ background: theme === 'dark' ? 'rgba(10,10,18,0.98)' : 'rgba(255,255,255,0.98)', borderTop: '1px solid var(--border)', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {navLinks.map(l => (
+            l.to ? (
+              <Link key={l.label} to={l.to} style={{ color: '#94a3b8', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 6 }} onClick={() => setMenuOpen(false)}>{l.icon}{l.label}</Link>
+            ) : (
+              <button key={l.label} onClick={l.action} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', textAlign: 'left', fontWeight: 500, fontSize: '1rem' }}>{l.label}</button>
+            )
+          ))}
+          {user ? (
+            <button onClick={handleLogout} style={{ color: '#fca5a5', textAlign: 'left', background: 'none', border: 'none', fontWeight: 500 }}>Logout</button>
+          ) : (
+            <>
+              <Link to="/login" onClick={() => setMenuOpen(false)} style={{ color: '#94a3b8' }}>Login</Link>
+              <Link to="/signup" onClick={() => setMenuOpen(false)} style={{ color: '#8b5cf6', fontWeight: 600 }}>Sign Up</Link>
+            </>
+          )}
+        </div>
+      )}
       <style>{`@media(max-width:768px){.desktop-nav, .desktop-auth{display:none!important}.menu-btn{display:flex!important}}`}</style>
     </nav>
   );

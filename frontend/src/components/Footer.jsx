@@ -10,11 +10,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Brain size={18} color="white" />
               </div>
               <span style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.1rem' }}>
-                Prep<span style={{ color: '#7c3aed' }}>Edge</span> <span style={{ color: '#7c3aed', fontSize: '0.65rem' }}>AI</span>
+                Prep<span style={{ color: '#8b5cf6' }}>Edge</span> <span style={{ color: '#06b6d4', fontSize: '0.65rem' }}>AI</span>
               </span>
             </div>
             <p style={{ color: 'var(--text-300)', fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 260 }}>
@@ -28,7 +28,7 @@ export default function Footer() {
             {['Dashboard', 'Generate Questions', 'Topics'].map(l => (
               <div key={l} style={{ marginBottom: 10 }}>
                 <Link to="/dashboard" style={{ color: 'var(--text-300)', fontSize: '0.9rem', transition: 'color 0.2s' }}
-                  onMouseEnter={e => e.target.style.color = 'var(--primary)'}
+                  onMouseEnter={e => e.target.style.color = '#8b5cf6'}
                   onMouseLeave={e => e.target.style.color = 'var(--text-300)'}
                 >{l}</Link>
               </div>
@@ -41,7 +41,7 @@ export default function Footer() {
             {[{ label: 'Sign Up', to: '/signup' }, { label: 'Login', to: '/login' }].map(l => (
               <div key={l.label} style={{ marginBottom: 10 }}>
                 <Link to={l.to} style={{ color: 'var(--text-300)', fontSize: '0.9rem' }}
-                  onMouseEnter={e => e.target.style.color = 'var(--primary)'}
+                  onMouseEnter={e => e.target.style.color = '#8b5cf6'}
                   onMouseLeave={e => e.target.style.color = 'var(--text-300)'}
                 >{l.label}</Link>
               </div>
@@ -62,7 +62,7 @@ export default function Footer() {
               ].map(({ label, url, icon }) => (
                 <a key={label} href={url} target="_blank" rel="noopener noreferrer"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: 'var(--text-300)', fontSize: '0.875rem', transition: 'color 0.2s', textDecoration: 'none' }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--primary)'}
+                  onMouseEnter={e => e.currentTarget.style.color = '#8b5cf6'}
                   onMouseLeave={e => e.currentTarget.style.color = 'var(--text-300)'}
                 >
                   <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', flexShrink: 0 }}>
@@ -78,7 +78,7 @@ export default function Footer() {
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <p style={{ color: 'var(--text-400)', fontSize: '0.85rem' }}>© 2026 PrepEdge AI. All rights reserved.</p>
           <p style={{ color: 'var(--text-400)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: 4 }}>
-            Built with <Heart size={14} style={{ color: 'var(--primary)' }} /> for developers
+            Built with <Heart size={14} style={{ color: '#8b5cf6' }} /> for developers
           </p>
         </div>
       </div>
