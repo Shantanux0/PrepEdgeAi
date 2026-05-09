@@ -213,6 +213,7 @@ export default function DashboardPage() {
   const [error, setError] = useState('');
   const [allTopics, setAllTopics] = useState([]);
   const [generated, setGenerated] = useState((saved.questions || []).length > 0);
+  const [isPanelHidden, setIsPanelHidden] = useState(false);
   const resultsRef = useRef();
 
   // Persisting wrappers
@@ -264,25 +265,42 @@ export default function DashboardPage() {
             <span style={{ fontFamily: 'Space Grotesk', fontWeight: 800, fontSize: '1.1rem' }}>Interview <span className="gradient-text">Dashboard</span></span>
           </div>
           {generated && (
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span className="badge badge-easy">{easyC} Easy</span>
-              <span className="badge badge-medium">{medC} Med</span>
-              <span className="badge badge-hard">{hardC} Hard</span>
-              <span style={{ fontSize: '0.78rem', color: 'var(--text-400)', marginLeft: 4 }}>{questions.length} total</span>
-              <button onClick={handleClear} style={{ padding: '5px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: '#f87171', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', marginLeft: 4, transition: 'all 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.16)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
-              >Clear</button>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <button 
+                onClick={() => setIsPanelHidden(!isPanelHidden)} 
+                className="btn btn-outline btn-sm" 
+                style={{ gap: 8, borderColor: isPanelHidden ? '#7c3aed' : 'var(--border)', color: isPanelHidden ? '#7c3aed' : 'var(--text-300)' }}
+              >
+                {isPanelHidden ? <><Sparkles size={14} /> Show Settings</> : <><X size={14} /> Hide Settings</>}
+              </button>
+              <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <span className="badge badge-easy">{easyC} Easy</span>
+                <span className="badge badge-medium">{medC} Med</span>
+                <span className="badge badge-hard">{hardC} Hard</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-400)', marginLeft: 4 }}>{questions.length} total</span>
+                <button onClick={handleClear} style={{ padding: '5px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: '#f87171', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', marginLeft: 4, transition: 'all 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.16)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
+                >Clear</button>
+              </div>
             </div>
           )}
         </div>
       </div>
 
       <div className="container" style={{ paddingTop: 32, paddingBottom: 60 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: 24, alignItems: 'start' }} className="dash-grid">
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isPanelHidden ? '1fr' : '380px 1fr', 
+          gap: 24, 
+          alignItems: 'start',
+          transition: 'grid-template-columns 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+        }} className="dash-grid">
 
           {/* ── Left panel ── */}
-          <div className="card sticky-panel">
+          {!isPanelHidden && (
+            <div className="card sticky-panel" style={{ animation: 'fade-in 0.3s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
               <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Sparkles size={15} color="#8b5cf6" /></div>
               <h2 style={{ fontSize: '1rem', fontWeight: 700 }}>Generate Questions</h2>
@@ -316,6 +334,7 @@ export default function DashboardPage() {
                 <label className="form-label">Target Companies <span style={{ color: 'var(--text-400)', fontWeight: 400 }}>(optional)</span></label>
                 <CompanyInput companies={companies} setCompanies={setCompanies} />
               </div>
+              </div>
 
               <button className="btn btn-primary" type="submit" disabled={loading || loadingMore || !topic.trim()} style={{ width: '100%', justifyContent: 'center', padding: '13px' }}>
                 {loading ? <><div className="spinner" /> Generating…</> : <><Brain size={15} /> Generate Questions</>}
@@ -333,7 +352,8 @@ export default function DashboardPage() {
                 ))}
               </div>
             </div>
-          </div>
+            </div>
+          )}
 
           {/* ── Right panel ── */}
           <div ref={resultsRef}>
