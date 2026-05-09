@@ -5,6 +5,7 @@ function Particles() {
   const ref = useRef();
   useEffect(() => {
     const canvas = ref.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let raf;
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
@@ -30,7 +31,7 @@ function Particles() {
         const opacity = p.o * (0.6 + 0.4 * Math.sin(p.pulse));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(167,139,250,${opacity})`;
+        ctx.fillStyle = `rgba(50,50,50,${opacity})`;
         ctx.fill();
       });
 
@@ -44,7 +45,7 @@ function Particles() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(139,92,246,${0.12 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(0,0,0,${0.12 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -64,7 +65,7 @@ function LogoMark({ progress }) {
   const ring2 = Math.min(progress * 2, 1) * 360;
 
   return (
-    <div style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 32px' }}>
+    <div className="logo-mark-wrapper" style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 32px' }}>
       {/* Outer glow */}
       <div style={{
         position: 'absolute', inset: -20, borderRadius: '50%',
@@ -74,7 +75,7 @@ function LogoMark({ progress }) {
 
       {/* Spinning ring 1 */}
       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', animation: 'spin-cw 3s linear infinite' }} viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(139,92,246,0.2)" strokeWidth="1.5" />
+        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
         <circle cx="60" cy="60" r="54" fill="none"
           stroke="url(#grad1)" strokeWidth="2.5"
           strokeDasharray={`${ring1 / 360 * 339.3} 339.3`}
@@ -84,16 +85,16 @@ function LogoMark({ progress }) {
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#7c3aed" />
-            <stop offset="100%" stopColor="#06b6d4" />
+            <stop offset="100%" stopColor="#7c3aed" />
           </linearGradient>
         </defs>
       </svg>
 
       {/* Spinning ring 2 (opposite) */}
       <svg style={{ position: 'absolute', inset: 10, width: 'calc(100% - 20px)', height: 'calc(100% - 20px)', animation: 'spin-ccw 2s linear infinite' }} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(6,182,212,0.15)" strokeWidth="1" />
+        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(30,30,30,0.15)" strokeWidth="1" />
         <circle cx="50" cy="50" r="44" fill="none"
-          stroke="#06b6d4" strokeWidth="1.5"
+          stroke="#7c3aed" strokeWidth="1.5"
           strokeDasharray="20 256.6"
           strokeLinecap="round"
           opacity="0.7"
@@ -106,7 +107,7 @@ function LogoMark({ progress }) {
       }}>
         <div style={{
           width: 64, height: 64, borderRadius: 18,
-          background: 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)',
+          background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           boxShadow: '0 0 30px rgba(124,58,237,0.5)',
           animation: 'logo-pop 0.6s cubic-bezier(0.34,1.56,0.64,1) both',
@@ -134,22 +135,21 @@ function ProgressBar({ progress }) {
   return (
     <div style={{ width: 280, margin: '0 auto' }}>
       <div style={{
-        height: 3, background: 'rgba(139,92,246,0.15)', borderRadius: 999,
+        height: 3, background: 'rgba(0,0,0,0.15)', borderRadius: 999,
         overflow: 'hidden', marginBottom: 12,
       }}>
         <div style={{
           height: '100%', borderRadius: 999,
-          background: 'linear-gradient(90deg, #7c3aed, #06b6d4)',
+          background: 'linear-gradient(90deg, #7c3aed, #6d28d9)',
           width: `${progress * 100}%`,
-          transition: 'width 0.1s linear',
           boxShadow: '0 0 12px rgba(124,58,237,0.6)',
         }} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.72rem', color: 'rgba(139,92,246,0.7)', letterSpacing: '0.1em', fontFamily: 'monospace' }}>
+        <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', fontFamily: 'monospace' }}>
           INITIALIZING
         </span>
-        <span style={{ fontSize: '0.72rem', color: 'rgba(167,139,250,0.8)', fontFamily: 'monospace', fontWeight: 600 }}>
+        <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', fontFamily: 'monospace', fontWeight: 600 }}>
           {Math.round(progress * 100)}%
         </span>
       </div>
@@ -205,13 +205,14 @@ export default function SplashScreen({ onComplete }) {
   }, [onComplete]);
 
   return (
-    <div style={{
+    <div className="splash-wrapper" style={{
       position: 'fixed', inset: 0, zIndex: 9999,
-      background: 'radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(6,182,212,0.1) 0%, transparent 50%), #050508',
+      background: 'radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(30,30,30,0.1) 0%, transparent 50%), #050508',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       opacity: fadeOut ? 0 : 1,
       transition: 'opacity 0.6s cubic-bezier(0.4,0,0.2,1)',
       userSelect: 'none',
+      padding: '0 24px',
     }}>
       <Particles />
 
@@ -224,25 +225,23 @@ export default function SplashScreen({ onComplete }) {
           <h1 style={{
             fontSize: '2.8rem', fontWeight: 900, letterSpacing: '-1.5px',
             fontFamily: 'Space Grotesk, sans-serif',
-            background: 'linear-gradient(135deg, #f1f5f9 30%, #a78bfa 70%, #38bdf8 100%)',
+            background: 'linear-gradient(135deg, #ffffff 30%, #7c3aed 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             lineHeight: 1.1,
           }}>
-            Prep<span style={{ WebkitTextFillColor: '#8b5cf6' }}>Edge</span>
+            Prep<span style={{ WebkitTextFillColor: '#7c3aed' }}>Edge</span>
           </h1>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 14px',
-            borderRadius: 999, background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)',
-            marginTop: 6,
-          }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#06b6d4', animation: 'blink 1s ease-in-out infinite' }} />
-            <span style={{ fontSize: '0.7rem', color: '#06b6d4', fontWeight: 700, letterSpacing: '0.15em' }}>AI INTERVIEW PREP</span>
+          <div style={{ marginTop: 12 }}>
+            <span style={{ fontSize: '0.7rem', color: '#7c3aed', fontWeight: 700, letterSpacing: '0.2em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#7c3aed', animation: 'blink 2s ease-in-out infinite' }} />
+              AI INTERVIEW PREP
+            </span>
           </div>
         </div>
 
         {/* Tagline */}
-        <p style={{ color: 'rgba(148,163,184,0.7)', fontSize: '0.9rem', marginBottom: 40, fontWeight: 400, letterSpacing: '0.02em' }}>
-          Powered by Groq + Llama 3
+        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 40 }}>
+          Powered by Groq & Llama 3
         </p>
 
         {/* Progress */}
@@ -250,11 +249,10 @@ export default function SplashScreen({ onComplete }) {
 
         {/* Status text */}
         <div style={{ height: 28, marginTop: 16 }}>
-          <p style={{
-            fontSize: '0.78rem', color: 'rgba(167,139,250,0.6)',
+          <p key={statusIdx} style={{
+            fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)',
             fontFamily: 'monospace', letterSpacing: '0.05em',
             animation: 'fade-status 0.3s ease',
-            key: statusIdx,
           }}>
             {STATUS_STEPS[statusIdx]?.msg}
           </p>
@@ -266,7 +264,7 @@ export default function SplashScreen({ onComplete }) {
         {[0, 1, 2].map(i => (
           <div key={i} style={{
             width: 4, height: 4, borderRadius: '50%',
-            background: `rgba(139,92,246,${0.3 + i * 0.2})`,
+            background: `rgba(0,0,0,${0.3 + i * 0.2})`,
             animation: `dot-bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
           }} />
         ))}
@@ -297,6 +295,10 @@ export default function SplashScreen({ onComplete }) {
         @keyframes fade-status {
           from { opacity: 0; transform: translateY(4px); }
           to   { opacity: 1; transform: translateY(0);   }
+        }
+        @media (max-width: 600px) {
+          .splash-wrapper h1 { font-size: 2rem !important; }
+          .logo-mark-wrapper { transform: scale(0.8); margin-bottom: 20px !important; }
         }
       `}</style>
     </div>

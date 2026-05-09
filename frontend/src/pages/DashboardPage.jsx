@@ -4,6 +4,7 @@ import { generateQuestions, getSupportedTopics } from '../api/apiClient';
 import { saveToBank, isInBank } from './ImportantBankPage';
 import { useFly } from '../context/FlyContext';
 import { Brain, Sparkles, X, ChevronDown, ChevronUp, BookOpen, User, Plus, Search, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 /* ── Cinematic generating animation ── */
 function GeneratingOverlay({ topic }) {
@@ -18,30 +19,30 @@ function GeneratingOverlay({ topic }) {
       {/* Neural ring */}
       <div style={{ position: 'relative', width: 90, height: 90, margin: '0 auto 32px' }}>
         <svg style={{ position: 'absolute', inset: 0, animation: 'spin 2s linear infinite' }} viewBox="0 0 90 90" width="90" height="90">
-          <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(139,92,246,0.15)" strokeWidth="3" />
+          <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(0,0,0,0.15)" strokeWidth="3" />
           <circle cx="45" cy="45" r="40" fill="none" stroke="url(#rg)" strokeWidth="3"
             strokeDasharray="60 191" strokeLinecap="round"
             style={{ transformOrigin: 'center', transform: 'rotate(-90deg)', transformBox: 'fill-box' }} />
-          <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%"><stop stopColor="#7c3aed"/><stop offset="1" stopColor="#06b6d4"/></linearGradient></defs>
+          <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%"><stop stopColor="var(--primary)"/><stop offset="1" stopColor="var(--primary)"/></linearGradient></defs>
         </svg>
         <svg style={{ position: 'absolute', inset: 10, animation: 'spin-r 1.4s linear infinite' }} viewBox="0 0 70 70" width="70" height="70">
-          <circle cx="35" cy="35" r="30" fill="none" stroke="rgba(6,182,212,0.2)" strokeWidth="2" />
-          <circle cx="35" cy="35" r="30" fill="none" stroke="#06b6d4" strokeWidth="2"
+          <circle cx="35" cy="35" r="30" fill="none" stroke="rgba(30,30,30,0.2)" strokeWidth="2" />
+          <circle cx="35" cy="35" r="30" fill="none" stroke="var(--primary)" strokeWidth="2"
             strokeDasharray="25 163" strokeLinecap="round" opacity="0.8" />
         </svg>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Brain size={24} color="#8b5cf6" style={{ animation: 'pulse-b 1.4s ease-in-out infinite' }} />
+          <Brain size={24} color="var(--primary)" style={{ animation: 'pulse-b 1.4s ease-in-out infinite' }} />
         </div>
       </div>
       <p style={{ color: 'var(--text-100)', fontSize: '1.05rem', fontWeight: 600, marginBottom: 8 }}>
         Generating with AI
       </p>
-      <p style={{ color: '#8b5cf6', fontSize: '0.85rem', fontFamily: 'monospace', minHeight: 22, animation: 'fade-step 0.4s ease', key: step }}>
+      <p style={{ color: 'var(--primary)', fontSize: '0.85rem', fontFamily: 'monospace', minHeight: 22, animation: 'fade-step 0.4s ease', key: step }}>
         {steps[step]}
       </p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 20 }}>
         {[0,1,2].map(i => (
-          <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b5cf6', animation: `dot-b 1.2s ${i * 0.2}s ease-in-out infinite` }} />
+          <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary)', animation: `dot-b 1.2s ${i * 0.2}s ease-in-out infinite` }} />
         ))}
       </div>
     </div>
@@ -89,9 +90,9 @@ function TopicSearch({ value, onChange, allTopics }) {
       {parts.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
           {parts.map(p => (
-            <span key={p} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(139,92,246,0.35)', fontSize: '0.78rem', color: '#a78bfa' }}>
+            <span key={p} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(0,0,0,0.35)', fontSize: '0.78rem', color: 'var(--primary)' }}>
               {p}
-              <button type="button" onClick={() => onChange(parts.filter(x => x !== p).join(', '))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#a78bfa', padding: 0, display: 'flex' }}><X size={11} /></button>
+              <button type="button" onClick={() => onChange(parts.filter(x => x !== p).join(', '))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary)', padding: 0, display: 'flex' }}><X size={11} /></button>
             </span>
           ))}
         </div>
@@ -101,12 +102,12 @@ function TopicSearch({ value, onChange, allTopics }) {
       {focused && filtered.length > 0 && (
         <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50, marginTop: 4, background: 'var(--bg-700)', border: '1px solid var(--border-hover)', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
           {filtered.map(t => (
-            <button key={t} type="button" onMouseDown={() => pick(t)} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', color: 'var(--text-200)', fontSize: '0.875rem', cursor: 'pointer', borderBottom: '1px solid rgba(139,92,246,0.08)', transition: 'background 0.15s' }}
+            <button key={t} type="button" onMouseDown={() => pick(t)} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', color: 'var(--text-200)', fontSize: '0.875rem', cursor: 'pointer', borderBottom: '1px solid rgba(0,0,0,0.08)', transition: 'background 0.15s' }}
               onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,58,237,0.12)'}
               onMouseLeave={e => e.currentTarget.style.background = 'none'}
             >
-              <span style={{ color: '#8b5cf6', fontWeight: 600 }}>{t.slice(0, t.toLowerCase().indexOf(current))}</span>
-              <span style={{ background: 'rgba(139,92,246,0.25)', borderRadius: 3 }}>{t.slice(t.toLowerCase().indexOf(current), t.toLowerCase().indexOf(current) + current.length)}</span>
+              <span style={{ color: 'var(--primary)', fontWeight: 600 }}>{t.slice(0, t.toLowerCase().indexOf(current))}</span>
+              <span style={{ background: 'rgba(0,0,0,0.25)', borderRadius: 3 }}>{t.slice(t.toLowerCase().indexOf(current), t.toLowerCase().indexOf(current) + current.length)}</span>
               {t.slice(t.toLowerCase().indexOf(current) + current.length)}
             </button>
           ))}
@@ -127,8 +128,8 @@ function CompanyInput({ companies, setCompanies }) {
       {companies.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
           {companies.map(c => (
-            <span key={c} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.3)', fontSize: '0.78rem', color: '#06b6d4' }}>
-              {c}<button onClick={() => remove(c)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#06b6d4', padding: 0, display: 'flex' }}><X size={11} /></button>
+            <span key={c} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: 'rgba(30,30,30,0.1)', border: '1px solid rgba(30,30,30,0.3)', fontSize: '0.78rem', color: 'var(--primary)' }}>
+              {c}<button onClick={() => remove(c)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary)', padding: 0, display: 'flex' }}><X size={11} /></button>
             </span>
           ))}
         </div>
@@ -141,7 +142,7 @@ function CompanyInput({ companies, setCompanies }) {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
         {SUGGESTIONS.filter(s => !companies.includes(s)).map(s => (
           <button key={s} type="button" onClick={() => add(s)} style={{ padding: '3px 10px', borderRadius: 999, background: 'var(--bg-700)', border: '1px solid var(--border)', color: 'var(--text-300)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = '#8b5cf6'; e.currentTarget.style.color = '#8b5cf6'; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = 'var(--primary)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-300)'; }}
           >{s}</button>
         ))}
@@ -167,9 +168,18 @@ function QuestionCard({ q, index }) {
     }
   };
   return (
-    <div className="card" style={{ padding: 0, overflow: 'hidden', cursor: 'pointer', animation: 'card-in 0.3s ease both', animationDelay: `${Math.min(index * 40, 400)}ms` }} onClick={() => setOpen(o => !o)}>
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.4) }}
+      className="card" 
+      style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} 
+      onClick={() => setOpen(o => !o)}
+    >
       <div style={{ padding: '18px 20px', display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-        <div style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '0.75rem', fontWeight: 700, color: '#8b5cf6' }}>{index + 1}</div>
+        <div style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)' }}>{index + 1}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', gap: 8, marginBottom: 7, flexWrap: 'wrap', alignItems: 'center' }}>
             <span className={`badge ${badge}`}>{q.difficulty || 'Medium'}</span>
@@ -178,22 +188,36 @@ function QuestionCard({ q, index }) {
           <p style={{ fontSize: '0.92rem', fontWeight: 500, lineHeight: 1.55, color: 'var(--text-100)' }}>{q.question}</p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', flexShrink: 0 }}>
-          <button ref={btnRef} onClick={handleSave} title={saved ? 'Saved to bank' : 'Save to Important Bank'} style={{ background: saved ? 'rgba(245,158,11,0.15)' : 'transparent', border: `1px solid ${saved ? 'rgba(245,158,11,0.4)' : 'var(--border)'}`, borderRadius: 8, padding: '5px 7px', cursor: saved ? 'default' : 'pointer', color: saved ? '#f59e0b' : 'var(--text-400)', display: 'flex', transition: 'all 0.2s' }}
-            onMouseEnter={e => { if (!saved) { e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)'; e.currentTarget.style.color = '#f59e0b'; } }}
+          <button ref={btnRef} onClick={handleSave} title={saved ? 'Saved to bank' : 'Save to Important Bank'} style={{ background: saved ? 'rgba(80,80,80,0.15)' : 'transparent', border: `1px solid ${saved ? 'rgba(80,80,80,0.4)' : 'var(--border)'}`, borderRadius: 8, padding: '5px 7px', cursor: saved ? 'default' : 'pointer', color: saved ? 'var(--primary)' : 'var(--text-400)', display: 'flex', transition: 'all 0.2s' }}
+            onMouseEnter={e => { if (!saved) { e.currentTarget.style.borderColor = 'rgba(80,80,80,0.4)'; e.currentTarget.style.color = 'var(--primary)'; } }}
             onMouseLeave={e => { if (!saved) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-400)'; } }}
-          ><Star size={13} fill={saved ? '#f59e0b' : 'none'} /></button>
-          <div style={{ color: 'var(--text-400)', marginTop: 2 }}>{open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</div>
-        </div>
-      </div>
-      {open && (
-        <div style={{ padding: '0 20px 20px', paddingLeft: 64, borderTop: '1px solid var(--border)', animation: 'fade-in 0.2s ease' }}>
-          <div style={{ marginTop: 14, background: 'var(--bg-700)', borderRadius: 10, padding: '14px 18px', border: '1px solid rgba(6,182,212,0.15)' }}>
-            <div style={{ fontSize: '0.7rem', color: '#06b6d4', fontWeight: 700, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Model Answer</div>
-            <p style={{ color: 'var(--text-200)', fontSize: '0.875rem', lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{q.answer}</p>
+          ><Star size={13} fill={saved ? 'var(--primary)' : 'none'} /></button>
+          <div style={{ color: 'var(--text-400)', marginTop: 2 }}>
+            <motion.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
+              <ChevronDown size={16} />
+            </motion.div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div style={{ padding: '0 20px 20px', paddingLeft: 64, borderTop: '1px solid var(--border)' }}>
+              <div style={{ marginTop: 14, background: 'var(--bg-700)', borderRadius: 10, padding: '14px 18px', border: '1px solid rgba(30,30,30,0.15)' }}>
+                <div style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 700, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Model Answer</div>
+                <p style={{ color: 'var(--text-200)', fontSize: '0.875rem', lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{q.answer}</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -254,7 +278,7 @@ export default function DashboardPage() {
       <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-800)', padding: '28px 0' }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 42, height: 42, borderRadius: 11, background: 'linear-gradient(135deg,#7c3aed,#06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><User size={20} color="white" /></div>
+            <div style={{ width: 42, height: 42, borderRadius: 11, background: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><User size={20} color="white" /></div>
             <div>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-400)' }}>Signed in as</p>
               <h1 style={{ fontSize: '1rem', fontWeight: 700 }}>{user?.name}</h1>
@@ -269,9 +293,9 @@ export default function DashboardPage() {
               <span className="badge badge-medium">{medC} Med</span>
               <span className="badge badge-hard">{hardC} Hard</span>
               <span style={{ fontSize: '0.78rem', color: 'var(--text-400)', marginLeft: 4 }}>{questions.length} total</span>
-              <button onClick={handleClear} style={{ padding: '5px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: '#f87171', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', marginLeft: 4, transition: 'all 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.16)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
+              <button onClick={handleClear} style={{ padding: '5px 12px', borderRadius: 8, background: 'rgba(50,50,50,0.08)', border: '1px solid rgba(50,50,50,0.25)', color: '#f87171', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', marginLeft: 4, transition: 'all 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(50,50,50,0.16)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(50,50,50,0.08)'}
               >Clear</button>
             </div>
           )}
@@ -284,7 +308,7 @@ export default function DashboardPage() {
           {/* ── Left panel ── */}
           <div className="card sticky-panel">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-              <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Sparkles size={15} color="#8b5cf6" /></div>
+              <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Sparkles size={15} color="#7c3aed" /></div>
               <h2 style={{ fontSize: '1rem', fontWeight: 700 }}>Generate Questions</h2>
             </div>
 
@@ -304,7 +328,7 @@ export default function DashboardPage() {
                         return (
                           <button key={t} type="button" disabled={selected || parts.length >= 3} onClick={() => {
                             if (!selected && parts.length < 3) setTopic([...parts, t].join(', '));
-                          }} style={{ padding: '3px 9px', borderRadius: 999, background: selected ? 'rgba(124,58,237,0.2)' : 'var(--bg-700)', border: `1px solid ${selected ? 'rgba(139,92,246,0.5)' : 'var(--border)'}`, color: selected ? '#a78bfa' : 'var(--text-300)', fontSize: '0.72rem', cursor: selected ? 'default' : 'pointer', transition: 'all 0.15s', opacity: parts.length >= 3 && !selected ? 0.4 : 1 }}>{t}</button>
+                          }} style={{ padding: '3px 9px', borderRadius: 999, background: selected ? 'rgba(124,58,237,0.2)' : 'var(--bg-700)', border: `1px solid ${selected ? 'rgba(0,0,0,0.5)' : 'var(--border)'}`, color: selected ? 'var(--primary)' : 'var(--text-300)', fontSize: '0.72rem', cursor: selected ? 'default' : 'pointer', transition: 'all 0.15s', opacity: parts.length >= 3 && !selected ? 0.4 : 1 }}>{t}</button>
                         );
                       })}
                     </div>
@@ -322,12 +346,12 @@ export default function DashboardPage() {
               </button>
             </form>
 
-            <div style={{ marginTop: 18, padding: '13px', background: 'rgba(6,182,212,0.05)', border: '1px solid rgba(6,182,212,0.12)', borderRadius: 10 }}>
-              <p style={{ fontSize: '0.74rem', color: '#06b6d4', fontWeight: 700, marginBottom: 10 }}>💡 TIPS</p>
+            <div style={{ marginTop: 18, padding: '13px', background: 'rgba(30,30,30,0.05)', border: '1px solid rgba(30,30,30,0.12)', borderRadius: 10 }}>
+              <p style={{ fontSize: '0.74rem', color: 'var(--primary)', fontWeight: 700, marginBottom: 10 }}>💡 TIPS</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                 {[`Search from ${allTopics.length}+ supported topics`, 'Select up to 3 topics at once', 'Use Generate 10 More to keep adding questions', 'Click any card to reveal the model answer'].map(tip => (
                   <div key={tip} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#06b6d4', flexShrink: 0, marginTop: 6 }} />
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--primary)', flexShrink: 0, marginTop: 6 }} />
                     <span style={{ color: 'var(--text-300)', fontSize: '0.78rem', lineHeight: 1.6 }}>{tip}</span>
                   </div>
                 ))}
@@ -339,8 +363,8 @@ export default function DashboardPage() {
           <div ref={resultsRef}>
             {!generated && !loading && (
               <div style={{ textAlign: 'center', padding: '80px 24px', background: 'var(--surface)', borderRadius: 'var(--radius-lg)', border: '1px dashed var(--border)' }}>
-                <div style={{ width: 68, height: 68, borderRadius: 18, background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(139,92,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                  <BookOpen size={26} color="#8b5cf6" />
+                <div style={{ width: 68, height: 68, borderRadius: 18, background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <BookOpen size={26} color="#7c3aed" />
                 </div>
                 <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: 8 }}>Ready to prepare?</h3>
                 <p style={{ color: 'var(--text-300)', fontSize: '0.875rem', maxWidth: 340, margin: '0 auto' }}>
@@ -364,15 +388,20 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {questions.map((q, i) => <QuestionCard key={`${q.id || ''}-${i}`} q={q} index={i} />)}
-                </div>
+                <motion.div 
+                  layout
+                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+                >
+                  <AnimatePresence>
+                    {questions.map((q, i) => <QuestionCard key={`${q.id || ''}-${i}`} q={q} index={i} />)}
+                  </AnimatePresence>
+                </motion.div>
 
                 {/* Generate More button */}
                 <div style={{ marginTop: 24, textAlign: 'center' }}>
                   {loadingMore ? (
                     <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, color: 'var(--text-300)' }}>
-                      <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid rgba(139,92,246,0.2)', borderTopColor: '#8b5cf6', animation: 'spin 0.7s linear infinite' }} />
+                      <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid rgba(0,0,0,0.2)', borderTopColor: 'var(--primary)', animation: 'spin 0.7s linear infinite' }} />
                       <span style={{ fontSize: '0.9rem' }}>Generating 10 more…</span>
                     </div>
                   ) : (
