@@ -303,7 +303,7 @@ export default function DashboardPage() {
             <div className="card sticky-panel" style={{ animation: 'fade-in 0.3s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
               <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Sparkles size={15} color="#8b5cf6" /></div>
-              <h2 style={{ fontSize: '1rem', fontWeight: 700 }}>Generate Questions</h2>
+              <h2 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Generate</h2>
             </div>
 
             {error && <div className="alert alert-error" style={{ marginBottom: 14, fontSize: '0.85rem' }}>{error}</div>}
@@ -336,7 +336,7 @@ export default function DashboardPage() {
               </div>
 
               <button className="btn btn-primary" type="submit" disabled={loading || loadingMore || !topic.trim()} style={{ width: '100%', justifyContent: 'center', padding: '13px' }}>
-                {loading ? <><div className="spinner" /> Generating…</> : <><Brain size={15} /> Generate Questions</>}
+                {loading ? <><div className="spinner" /> Generating…</> : <><Sparkles size={14} /> Generate</>}
               </button>
             </form>
 
