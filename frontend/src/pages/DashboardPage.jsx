@@ -334,7 +334,6 @@ export default function DashboardPage() {
                 <label className="form-label">Target Companies <span style={{ color: 'var(--text-400)', fontWeight: 400 }}>(optional)</span></label>
                 <CompanyInput companies={companies} setCompanies={setCompanies} />
               </div>
-              </div>
 
               <button className="btn btn-primary" type="submit" disabled={loading || loadingMore || !topic.trim()} style={{ width: '100%', justifyContent: 'center', padding: '13px' }}>
                 {loading ? <><div className="spinner" /> Generating…</> : <><Brain size={15} /> Generate Questions</>}
